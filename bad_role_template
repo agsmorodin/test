@@ -1,0 +1,35 @@
+name: bad_role
+group: Roles
+automatic_pipeline_locking: false
+cron_timer_spec: null
+materials:
+- type: git
+  name: test
+  url: ssh://git@stash.backbase.com:7999/cxp-auto/ansible.git
+  branch: master
+  dest: null
+  poll_new_changes: false
+  blacklist: []
+stages:
+- name: defaultStage
+  type: manual
+  fetch_materials: true
+  clean_working_dir: false
+  never_cleanup_artifacts: false
+  jobs:
+  - name: defaultJob
+    resources: []
+    tasks:
+    - type: script
+      runif: passed
+      script: "cd bad_role  && kitchen test"
+    artifacts: []
+    environment_variables: {}
+    encrypted_environment_variables: {}
+    tabs: []
+  environment_variables: {}
+  encrypted_environment_variables: {}
+environment_variables: {}
+encrypted_environment_variables: {}
+parameters: {}
+
