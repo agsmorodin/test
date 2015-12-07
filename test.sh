@@ -44,23 +44,26 @@ echo "************"
 all_dirs=( $(ls -d */) )
 for dir in "${all_dirs[@]}"
 do
-  #echo $dir
-  size=${#dir} 
-  #echo $size 
-  if [ -n "$force" ] 
-  then
+  if [ -f ${dir}.kitchen-ec2.yml ];
+   then
+   #echo $dir
+   size=${#dir} 
+   #echo $size 
+   if [ -n "$force" ] 
+   then
        echo "using force"
        execute_role     
-  else
+   else
        echo "comparing"  
        for changed_file in "${changed_files[@]}"
        do
           if [ "$dir" == "${changed_file:0:$size}" ];
    	  then
 		execute_role
+		break
           fi
        done
+   fi
   fi
-
 done
 

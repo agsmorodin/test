@@ -1,0 +1,38 @@
+name: mysql
+group: Roles
+automatic_pipeline_locking: false
+cron_timer_spec: null
+materials:
+- type: git
+  name: test
+  url: ssh://git@stash.backbase.com:7999/cxp-auto/ansible.git
+  branch: CD-309-2-split-current-cxp6-playbooks-to
+  dest: null
+  poll_new_changes: false
+  blacklist: []
+stages:
+- name: defaultStage
+  type: manual
+  fetch_materials: true
+  clean_working_dir: false
+  never_cleanup_artifacts: false
+  jobs:
+  - name: defaultJob
+    resources:
+    - test
+    tasks:
+    - type: script
+      runif: passed
+      script: cd mysql  && KITCHEN_YAML=.kitchen-ec2.yml  kitchen test --destroy
+    artifacts: []
+    environment_variables: {}
+    encrypted_environment_variables: {}
+    tabs: []
+  environment_variables: {}
+  encrypted_environment_variables: {}
+environment_variables: {}
+encrypted_environment_variables:
+  AWS_ACCESS_KEY_ID: /LOuwWiQuT5/LoRfq0ujXUSuNkMOdGhm
+  AWS_SECRET_ACCESS_KEY: yrh3b/wnYhy0K2MFjjOtAumnEjCbQ02luLwW4edZNpagwYDKoKa4Do2XiFFqy5JP
+parameters: {}
+
